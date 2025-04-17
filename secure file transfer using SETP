@@ -1,0 +1,19 @@
+python
+CopyEdit
+import paramiko
+
+host = "192.168.1.5"
+port = 22
+username = "user"
+password = "password"
+
+client = paramiko.SSHClient()
+client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+client.connect(host, port, username, password)
+
+sftp = client.open_sftp()
+sftp.put("localfile.txt", "/remote/path/remote_file.txt")
+print("File transferred securely.")
+
+sftp.close()
+client.close()
