@@ -1,0 +1,11 @@
+python
+CopyEdit
+from scapy.all import sniff, ARP
+
+def detect_arp_spoof(packet):
+    if packet.haslayer(ARP) and packet.op == 2:
+        real_mac = packet.hwsrc
+        print(f"Possible ARP Spoofing: {packet.psrc} has MAC {real_mac}")
+
+print("Monitoring ARP packets...")
+sniff(filter="arp", prn=detect_arp_spoof, store=False)
